@@ -1,8 +1,9 @@
+using LinkDev.Talabat.APIs.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
