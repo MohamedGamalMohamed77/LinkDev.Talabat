@@ -3,9 +3,40 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B99E7C90-406C-4B5E-BE09-0954C2089C28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D60936C6-5990-4A16-8E6C-67733A77493E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{06A8A7D4-0BE3-4DD3-BBA3-462F7F17F0C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7C8E53C2-FEEA-4650-9F5F-68E9CD630E32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0E63A0DB-4AF5-45D4-A0C4-07CDE29DB481}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{CDCBB473-A7A9-45EB-B4BE-D4A312473795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkDev.Talabat.APIs", "LinkDev.Talabat.APIs\LinkDev.Talabat.APIs.csproj", "{730B1A50-0E71-4F6A-8BDB-9D8DB041BC62}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{730B1A50-0E71-4F6A-8BDB-9D8DB041BC62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730B1A50-0E71-4F6A-8BDB-9D8DB041BC62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730B1A50-0E71-4F6A-8BDB-9D8DB041BC62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730B1A50-0E71-4F6A-8BDB-9D8DB041BC62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06A8A7D4-0BE3-4DD3-BBA3-462F7F17F0C8} = {B99E7C90-406C-4B5E-BE09-0954C2089C28}
+		{7C8E53C2-FEEA-4650-9F5F-68E9CD630E32} = {B99E7C90-406C-4B5E-BE09-0954C2089C28}
+		{0E63A0DB-4AF5-45D4-A0C4-07CDE29DB481} = {B99E7C90-406C-4B5E-BE09-0954C2089C28}
+		{CDCBB473-A7A9-45EB-B4BE-D4A312473795} = {B99E7C90-406C-4B5E-BE09-0954C2089C28}
+		{730B1A50-0E71-4F6A-8BDB-9D8DB041BC62} = {06A8A7D4-0BE3-4DD3-BBA3-462F7F17F0C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFDF836D-0794-4F47-A3C9-C86E47E4EC35}
