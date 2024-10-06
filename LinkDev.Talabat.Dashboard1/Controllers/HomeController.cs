@@ -1,8 +1,8 @@
-using LinkDev.Talabat.Dashboard.Models;
+using LinkDev.Talabat.Dashboard1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace LinkDev.Talabat.Dashboard.Controllers
+namespace LinkDev.Talabat.Dashboard1.Controllers
 {
 	public class HomeController : Controller
 	{

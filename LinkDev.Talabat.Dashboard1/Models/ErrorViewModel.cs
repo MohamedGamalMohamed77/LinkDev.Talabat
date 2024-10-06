@@ -1,4 +1,4 @@
-namespace LinkDev.Talabat.Dashboard.Models
+namespace LinkDev.Talabat.Dashboard1.Models
 {
 	public class ErrorViewModel
 	{

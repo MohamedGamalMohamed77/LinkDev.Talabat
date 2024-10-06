@@ -1,4 +1,4 @@
-namespace LinkDev.Talabat.Dashboard
+namespace LinkDev.Talabat.Dashboard1
 {
 	public class Program
 	{
