@@ -10,53 +10,58 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-	public class StoreContextIntializer(StoreContext dbcontext) : IStoreContextIntializer
+	public class StoreContextIntializer(StoreContext _dbContext) : IStoreContextIntializer
 	{
 		public async Task IntializeAsync()
 		{
-			var pindingMigrations = await dbcontext.Database.GetPendingMigrationsAsync();
+			var pindingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();
 
 			if (pindingMigrations.Any())
-				await dbcontext.Database.MigrateAsync();
+				await _dbContext.Database.MigrateAsync();
 		}
 
 		public async Task SeedAsync()
 		{
-			if (!dbcontext.Brands.Any())
+			if (!_dbContext.Brands.Any())
 			{
+				var brandsData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");
+				var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
 
-				var currentDirectory = Directory.GetCurrentDirectory();
-				var brandData = await File.ReadAllTextAsync($"../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");
-				var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
 
 				if (brands?.Count > 0)
 				{
-					await dbcontext.Brands.AddRangeAsync(brands);
-					await dbcontext.SaveChangesAsync();
+					await _dbContext.Set<ProductBrand>().AddRangeAsync(brands);
+					await _dbContext.SaveChangesAsync();
 				}
 			}
-			if (!dbcontext.Categories.Any())
+
+			if (!_dbContext.Categories.Any())
 			{
-				var categoryData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/categories.json");
-				var categories = JsonSerializer.Deserialize<List<ProductBrand>>(categoryData);
+				var categoriesData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/categories.json");
+				var categories = JsonSerializer.Deserialize<List<ProductCategory>>(categoriesData);
+
 
 				if (categories?.Count > 0)
 				{
-					await dbcontext.Brands.AddRangeAsync(categories);
-					await dbcontext.SaveChangesAsync();
+					await _dbContext.Set<ProductCategory>().AddRangeAsync(categories);
+					await _dbContext.SaveChangesAsync();
 				}
 			}
-			if (!dbcontext.Products.Any())
+
+			if (!_dbContext.Products.Any())
 			{
-				var productData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/products.json");
-				var products = JsonSerializer.Deserialize<List<Product>>(productData);
+				var productsData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/products.json");
+				var products = JsonSerializer.Deserialize<List<Product>>(productsData);
+
 
 				if (products?.Count > 0)
 				{
-					await dbcontext.Products.AddRangeAsync(products);
-					await dbcontext.SaveChangesAsync();
+					await _dbContext.Set<Product>().AddRangeAsync(products);
+					await _dbContext.SaveChangesAsync();
 				}
 			}
 		}
 	}
 }
+	
+
