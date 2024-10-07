@@ -1,9 +1,11 @@
 using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 namespace LinkDev.Talabat.APIs
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,29 @@ namespace LinkDev.Talabat.APIs
 			#endregion
 			
 				var app = webApplicationBuilder.Build();
+			var scope = app.Services.CreateAsyncScope();
+			var services = scope.ServiceProvider;
+			var dbcontext = services.GetRequiredService<StoreContext>();
+
+			var LoggerFactory= services.GetRequiredService<ILoggerFactory>();
+
+			try
+			{
+				var pindingMigrations = dbcontext.Database.GetPendingMigrations();
+
+				if (pindingMigrations.Any())
+					 await dbcontext.Database.MigrateAsync();//Update-Database
+
+
+			}
+			catch(Exception ex) 
+			{
+				var Logger = LoggerFactory.CreateLogger<Program>();
+				Logger.LogError(ex,"an error has been occured during applaying migrations");
+
+
+			}
+
 
 			// Configure the HTTP request pipeline.
 			#region Configure Kestral Middlewares
