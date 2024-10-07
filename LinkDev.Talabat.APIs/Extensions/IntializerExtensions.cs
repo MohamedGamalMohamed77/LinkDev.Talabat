@@ -18,7 +18,6 @@ namespace LinkDev.Talabat.APIs.Extensions
 				await storeContextIntializer.IntializeAsync();
 				await storeContextIntializer.SeedAsync();
 
-
 			}
 			catch (Exception ex)
 			{
