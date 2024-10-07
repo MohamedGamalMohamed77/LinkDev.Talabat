@@ -1,3 +1,4 @@
+using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -24,29 +25,11 @@ namespace LinkDev.Talabat.APIs
 			#endregion
 			
 			var app = webApplicationBuilder.Build();
+
+			#region Databases Intialization
+
+			await app.IntializeStoreContextAsync();
 			
-			#region Update-Database
-			
-			var scope = app.Services.CreateAsyncScope();
-			var services = scope.ServiceProvider;
-			var dbcontext = services.GetRequiredService<StoreContext>();
-
-			var LoggerFactory = services.GetRequiredService<ILoggerFactory>();
-
-			try
-			{
-				var pindingMigrations = dbcontext.Database.GetPendingMigrations();
-
-				if (pindingMigrations.Any())
-					await dbcontext.Database.MigrateAsync();//Update-Database
-
-				await StoreContextSeed.SeedAsync(dbcontext);
-			}
-			catch (Exception ex)
-			{
-				var Logger = LoggerFactory.CreateLogger<Program>();
-				Logger.LogError(ex, "an error has been occured during applaying migrations");
-			} 
 			#endregion
 
 			// Configure the HTTP request pipeline.
