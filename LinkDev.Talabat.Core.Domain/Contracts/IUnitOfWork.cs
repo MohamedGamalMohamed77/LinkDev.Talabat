@@ -9,9 +9,7 @@ namespace LinkDev.Talabat.Core.Domain.Contracts
 {
 	public interface IUnitOfWork :IAsyncDisposable
 	{
-		public IGenericRepository<Product,int> productRepository { get; }
-		public IGenericRepository<ProductCategory, int> categoryRepository { get; }
-		public IGenericRepository<ProductBrand, int> brandRepository { get; }
+		IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>; 
 
 		Task<int> CompeleteAsync();
 
