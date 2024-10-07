@@ -23,30 +23,31 @@ namespace LinkDev.Talabat.APIs
 
 			#endregion
 			
-				var app = webApplicationBuilder.Build();
+			var app = webApplicationBuilder.Build();
+			
+			#region Update-Database
+			
 			var scope = app.Services.CreateAsyncScope();
 			var services = scope.ServiceProvider;
 			var dbcontext = services.GetRequiredService<StoreContext>();
 
-			var LoggerFactory= services.GetRequiredService<ILoggerFactory>();
+			var LoggerFactory = services.GetRequiredService<ILoggerFactory>();
 
 			try
 			{
 				var pindingMigrations = dbcontext.Database.GetPendingMigrations();
 
 				if (pindingMigrations.Any())
-					 await dbcontext.Database.MigrateAsync();//Update-Database
+					await dbcontext.Database.MigrateAsync();//Update-Database
 
-
+				await StoreContextSeed.SeedAsync(dbcontext);
 			}
-			catch(Exception ex) 
+			catch (Exception ex)
 			{
 				var Logger = LoggerFactory.CreateLogger<Program>();
-				Logger.LogError(ex,"an error has been occured during applaying migrations");
-
-
-			}
-
+				Logger.LogError(ex, "an error has been occured during applaying migrations");
+			} 
+			#endregion
 
 			// Configure the HTTP request pipeline.
 			#region Configure Kestral Middlewares
