@@ -18,6 +18,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 
 			Services.AddScoped(typeof(IStoreContextIntializer), typeof(StoreContextIntializer));
 			Services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+			Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
 			return Services;
 		}
