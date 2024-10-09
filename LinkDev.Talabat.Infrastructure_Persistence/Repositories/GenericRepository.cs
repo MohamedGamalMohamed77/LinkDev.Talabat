@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
 {
 	public class GenericRepository<TEntity, TKey>(StoreContext _dbContext) : IGenericRepository<TEntity, TKey>
-		where TEntity : BaseAuditableEntity<TKey>
+		where TEntity : BaseEntity<TKey>
 		where TKey : IEquatable<TKey>
 	{
 		public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false) => withTracking ?

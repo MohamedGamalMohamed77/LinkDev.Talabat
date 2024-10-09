@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDev.Talabat.Core.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDev.Talabat.Core.Application", "LinkDev.Talabat.Core.Application\LinkDev.Talabat.Core.Application.csproj", "{A6D12E6F-7AE9-4A18-A5C9-1A23D617199F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDev.Talabat.Core.Aplication_Abstraction", "LinkDev.Talabat.Core.Aplication_Abstraction\LinkDev.Talabat.Core.Aplication_Abstraction.csproj", "{A41D13BD-56FA-43F9-83BD-944E9CA2B28F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDev.Talabat.Core.Aplication.Abstraction", "LinkDev.Talabat.Core.Aplication_Abstraction\LinkDev.Talabat.Core.Aplication.Abstraction.csproj", "{A41D13BD-56FA-43F9-83BD-944E9CA2B28F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDev.Talabat.Infrastructure", "LinkDev.Talabat.Infrastructure\LinkDev.Talabat.Infrastructure.csproj", "{D62A6516-DF96-4C26-B2C1-D7F34F295FD6}"
 EndProject
@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dashboard", "Dashboard", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{9A7C062A-22F7-411A-9CFF-BC7BA428B3DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkDev.Talabat.Dashboard1", "LinkDev.Talabat.Dashboard1\LinkDev.Talabat.Dashboard1.csproj", "{926CE53A-6087-412D-8F56-E91EE5C01AD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDev.Talabat.Dashboard1", "LinkDev.Talabat.Dashboard1\LinkDev.Talabat.Dashboard1.csproj", "{926CE53A-6087-412D-8F56-E91EE5C01AD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
