@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LinkDev.Talabat.Core.Aplication_Abstraction\LinkDev.Talabat.Core.Aplication.Abstraction.csproj" />
+    <ProjectReference Include="..\LinkDev.Talabat.Infrastructure_Persistence\LinkDev.Talabat.Infrastructure.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
