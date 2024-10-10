@@ -13,14 +13,22 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 	public class ProductsController(IServiceManager serviceManager) : BaseApiController
 	{
 
-		[HttpGet]
+		[HttpGet] //GET: /api/product
 		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts()
-		{ 
-		var products = await serviceManager.ProductService.GetProductsAsync();
+		{
+			var products = await serviceManager.ProductService.GetProductsAsync();
 			return Ok(products);
 		}
+		[HttpGet("{id:int}")] //GET: /api/product/id
+		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProduct(int id)
+		{ 
+		var product =await serviceManager.ProductService.GetProductAsync(id);
 
-
+			if (product is null)
+				return NotFound(new {statusCode = 404, message = "not found "});
+			return Ok(product);
+		
+		}
 
 	}
 }
