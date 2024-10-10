@@ -1,9 +1,9 @@
-using LinkDev.Talabat.APIs.Controllers.Base;
+using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
 using LinkDev.Talabat.APIs.Controllers.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace LinkDev.Talabat.APIs.Controllers
+namespace LinkDev.Talabat.APIs.Controllers.Controllers
 {
 	public class WeatherForecastController : BaseApiController
 	{

@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LinkDev.Talabat.APIs.Controllers\LinkDev.Talabat.APIs.Controllers.csproj" />
     <ProjectReference Include="..\LinkDev.Talabat.Core.Aplication_Abstraction\LinkDev.Talabat.Core.Aplication.Abstraction.csproj" />
+    <ProjectReference Include="..\LinkDev.Talabat.Core.Application\LinkDev.Talabat.Core.Application.csproj" />
     <ProjectReference Include="..\LinkDev.Talabat.Infrastructure_Persistence\LinkDev.Talabat.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 

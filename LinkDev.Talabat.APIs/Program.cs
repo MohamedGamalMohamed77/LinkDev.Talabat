@@ -1,9 +1,9 @@
 using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
 using LinkDev.Talabat.Infrastructure.Persistence;
-using LinkDev.Talabat.Infrastructure.Persistence.Data;
-using Microsoft.EntityFrameworkCore;
+
 namespace LinkDev.Talabat.APIs
 {
 	public class Program
@@ -27,6 +27,9 @@ namespace LinkDev.Talabat.APIs
 			webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserServices));
 			
 			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
+
+			webApplicationBuilder.Services.AddApplicationServices();
+
 
 			#endregion
 			

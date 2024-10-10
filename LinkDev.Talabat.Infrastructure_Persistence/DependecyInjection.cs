@@ -13,9 +13,12 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 		{
 			Services.AddDbContext<StoreContext>((options) =>
 			{
-				options.UseSqlServer(Configuration.GetConnectionString("StoreContext"));
+				options
+				.UseLazyLoadingProxies()
+				.UseSqlServer(Configuration.GetConnectionString("StoreContext"));
 			});
 
+			
 			Services.AddScoped(typeof(IStoreContextIntializer), typeof(StoreContextIntializer));
 			Services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 			Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
