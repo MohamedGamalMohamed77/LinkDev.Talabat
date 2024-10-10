@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Core.Aplication.Abstraction.Models
+namespace LinkDev.Talabat.Core.Domain.Entities.Employees
 {
-	public class CategoryDto
+	public class Department
 	{
-		public int Id { get; set; }
 		public required string Name { get; set; }
+		public TimeOnly CreationDate { get; set; }
+
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
-using LinkDev.Talabat.Core.Aplication.Abstraction.Models;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 {
-	public class ProductsController(IServiceManager serviceManager) : BaseApiController
+    public class ProductsController(IServiceManager serviceManager) : BaseApiController
 	{
 
 		[HttpGet] //GET: /api/product

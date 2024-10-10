@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using LinkDev.Talabat.Core.Aplication.Abstraction.Models;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Employees;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Products;
+using LinkDev.Talabat.Core.Domain.Entities.Employees;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Mapping
 {
-	public class MappingProfile : Profile
+    public class MappingProfile : Profile
 	{
 		public MappingProfile() 
 		{
@@ -20,7 +22,7 @@ namespace LinkDev.Talabat.Core.Application.Mapping
 			CreateMap<ProductBrand,BrandDto>();
 
 			CreateMap<ProductCategory, CategoryDto>();
-
+			CreateMap<Employee, EmployeeToReturnDto>();
 		}
 	}
 }
