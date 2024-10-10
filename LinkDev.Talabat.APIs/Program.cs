@@ -15,7 +15,9 @@ namespace LinkDev.Talabat.APIs
 			// Add services to the container.
 
 			#region Configure Services
-			webApplicationBuilder.Services.AddControllers();
+			webApplicationBuilder.Services
+				.AddControllers()
+				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // register required services
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 			webApplicationBuilder.Services.AddEndpointsApiExplorer();
