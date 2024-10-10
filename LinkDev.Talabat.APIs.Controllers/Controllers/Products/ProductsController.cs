@@ -20,7 +20,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 			return Ok(products);
 		}
 		[HttpGet("{id:int}")] //GET: /api/product/id
-		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProduct(int id)
+		public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
 		{ 
 		var product =await serviceManager.ProductService.GetProductAsync(id);
 
@@ -28,6 +28,20 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 				return NotFound(new {statusCode = 404, message = "not found "});
 			return Ok(product);
 		
+		}
+		[HttpGet("brands")]
+		public async Task<ActionResult<BrandDto>> GetBrands()
+		{
+			var brands = await serviceManager.ProductService.GetBrandsAsync();
+
+			return Ok(brands);
+		}
+		[HttpGet("categories")]
+		public async Task<ActionResult<BrandDto>> GetCategories()
+		{
+			var categories = await serviceManager.ProductService.GetCatigoriesAsync();
+
+			return Ok(categories);
 		}
 
 	}
