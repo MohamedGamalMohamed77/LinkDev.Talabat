@@ -2,7 +2,7 @@
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Products;
 using LinkDev.Talabat.Core.Application.Services.Products;
-using LinkDev.Talabat.Core.Domain.Contracts;
+using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services
 {
-	public class ServiceManager : IServiceManager
+    public class ServiceManager : IServiceManager
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;

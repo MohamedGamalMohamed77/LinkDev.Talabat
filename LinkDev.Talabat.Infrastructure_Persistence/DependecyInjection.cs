@@ -1,4 +1,4 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence
 {
-	public static class DependecyInjection 
+    public static class DependecyInjection 
 	{
 		public static IServiceCollection AddPersistenceServices(this IServiceCollection Services, IConfiguration Configuration)
 		{

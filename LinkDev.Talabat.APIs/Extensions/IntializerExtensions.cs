@@ -1,10 +1,10 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using System.Runtime.CompilerServices;
 
 namespace LinkDev.Talabat.APIs.Extensions
 {
-	public static class IntializerExtensions
+    public static class IntializerExtensions
 	{
 		public static async Task<WebApplication> IntializeStoreContextAsync(this WebApplication app)
 		{

@@ -1,10 +1,10 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using System.Text.Json;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-	internal class StoreContextIntializer(StoreContext _dbContext) : IStoreContextIntializer
+    internal class StoreContextIntializer(StoreContext _dbContext) : IStoreContextIntializer
 	{
 
 		public async Task IntializeAsync()
