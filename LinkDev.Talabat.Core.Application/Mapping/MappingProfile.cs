@@ -17,10 +17,10 @@ namespace LinkDev.Talabat.Core.Application.Mapping
 		{
 			CreateMap<Product, ProductToReturnDto>()
 					.ForMember(P => P.Brand, O => O.MapFrom(src => src.Brand!.Name))
-					.ForMember(P => P.Category, O => O.MapFrom(src => src.Category!.Name));
+					.ForMember(P => P.Category, O => O.MapFrom(src => src.Category!.Name))
+					.ForMember(P => P.PictureUrl, O => O.MapFrom<ProductPictureUlResolver>());
 
 			CreateMap<ProductBrand,BrandDto>();
-
 			CreateMap<ProductCategory, CategoryDto>();
 			CreateMap<Employee, EmployeeToReturnDto>();
 		}

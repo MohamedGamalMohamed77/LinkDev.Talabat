@@ -15,6 +15,7 @@ namespace LinkDev.Talabat.APIs
 			// Add services to the container.
 
 			#region Configure Services
+
 			webApplicationBuilder.Services
 				.AddControllers()
 				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // register required services
@@ -54,6 +55,7 @@ namespace LinkDev.Talabat.APIs
 
 			app.UseAuthorization();
 
+			app.UseStaticFiles();
 			app.MapControllers();
 
 			#endregion
