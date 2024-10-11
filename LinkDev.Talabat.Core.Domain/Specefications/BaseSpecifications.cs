@@ -11,6 +11,10 @@ namespace LinkDev.Talabat.Core.Domain.Specefications
 		public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new();
 		public Expression<Func<TEntity, object>>? OredrBy { get; set; } = null;
 		public Expression<Func<TEntity, object>>? OrderByDescending { get; set; } = null;
+		public int Skip { get ; set ; }
+		public int Take { get ; set ; }
+		public bool IsPaginationEnabled { get; set; }
+
 		protected BaseSpecifications()
 		{
 
@@ -37,6 +41,12 @@ namespace LinkDev.Talabat.Core.Domain.Specefications
 		{
 		}
 
+		private protected void ApplyPagination(int skip, int take)
+		{
+			IsPaginationEnabled = true;
+			Skip = skip;
+			Take = take;
+		}
 
 	}
 }

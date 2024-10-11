@@ -10,8 +10,8 @@ namespace LinkDev.Talabat.Core.Domain.Specefications.Products
     public class ProductWithBrandAndCategorySpecifications : BaseSpecifications<Product, int>
 	{
 		// this constructor is created for building query that return all products with it's brands and categories
-		public ProductWithBrandAndCategorySpecifications(string? sort,int? brandId, int? categoryId) : 
-			base(
+		public ProductWithBrandAndCategorySpecifications(string? sort,int? brandId, int? categoryId,int pageSize,int pageIndex) 
+			: base(
 				P =>
 				(!brandId.HasValue || P.BrandId==brandId)
 				&&
@@ -19,7 +19,7 @@ namespace LinkDev.Talabat.Core.Domain.Specefications.Products
 				)
 		{
 			AddIncludes();
-			AddOrderBy(P => P.Name);
+		
 			if (!string.IsNullOrEmpty(sort))
 			{
 				switch (sort)
@@ -41,6 +41,8 @@ namespace LinkDev.Talabat.Core.Domain.Specefications.Products
 
 				}
 			}
+
+			ApplyPagination((pageIndex-1) * pageSize ,pageSize);
 		}
 		// this constructor is created for building query that return specific product with it's brand and category
 		public ProductWithBrandAndCategorySpecifications(int id) : base(id)
