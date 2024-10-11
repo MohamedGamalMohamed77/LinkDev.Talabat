@@ -1,21 +1,18 @@
 ﻿using LinkDev.Talabat.Core.Domain.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Domain.Entities
 {
-    public abstract class BaseSpecifications<TEntity, TKey> : ISpecifications<TEntity, TKey>
+	public abstract class BaseSpecifications<TEntity, TKey> : ISpecifications<TEntity, TKey>
         where TEntity : BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         public Expression<Func<TEntity,bool>>? Critria { get; set; } = null;
         public List<Expression<Func<TEntity,object>>> Includes { get; set; } = new();
+        public Expression<Func<TEntity, object>>? OredrBy { get; set; } = null;
+		public Expression<Func<TEntity, object>>? OrderByDescending { get; set; } = null;
 
-        public BaseSpecifications()
+		public BaseSpecifications()
         {
 
         }
@@ -24,6 +21,18 @@ namespace LinkDev.Talabat.Core.Domain.Entities
             Critria = E => E.Id.Equals(id);
         }
 
-		
+        private protected virtual void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression)
+        {
+            OredrBy = orderByExpression;
+        }
+		private protected virtual void AddOrderByDesc(Expression<Func<TEntity, object>> orderByExpressionDesc)
+		{
+			OrderByDescending = orderByExpressionDesc;
+		}
+		private protected virtual void AddIncludes()
+		{
+		}
+
+
 	}
 }

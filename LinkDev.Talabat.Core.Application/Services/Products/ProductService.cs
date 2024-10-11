@@ -18,9 +18,9 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
 {
     public class ProductService(IUnitOfWork _unitOfWork, IMapper mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
+        public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(string? sort)
         {
-            var spec = new ProductWithBrandAndCategorySpecifications();
+            var spec = new ProductWithBrandAndCategorySpecifications(sort);
 
             var products = await _unitOfWork.GetRepository<Product, int>().GetAllWithSpecAsync(spec);
             var productsToReturn = mapper.Map<IEnumerable<ProductToReturnDto>>(products);
@@ -28,7 +28,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
         }
         public async Task<ProductToReturnDto> GetProductAsync(int id)
         {
-            var spec = new ProductWithBrandAndCategorySpecifications(); 
+            var spec = new ProductWithBrandAndCategorySpecifications(id); 
             var product = await _unitOfWork.GetRepository<Product, int>().GetWithSpecAsync(spec);
             var productToReturn = mapper.Map<ProductToReturnDto>(product);
             return productToReturn;
@@ -47,5 +47,6 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
             return categoriesToReturn;
         }
 
-    }
+		
+	}
 }

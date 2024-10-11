@@ -18,6 +18,12 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 			if (spec.Critria is not null)
 				query = query.Where(spec.Critria);
 
+			if(spec.OrderByDescending is not null)
+				query = query.OrderByDescending(spec.OrderByDescending);
+
+			else if (spec.OredrBy is not null)
+				query = query.OrderBy(spec.OredrBy);
+
 			query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
 
 			return query;
