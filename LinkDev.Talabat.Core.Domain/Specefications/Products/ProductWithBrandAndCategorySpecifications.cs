@@ -19,7 +19,7 @@ namespace LinkDev.Talabat.Core.Domain.Specefications.Products
 				)
 		{
 			AddIncludes();
-		
+			AddOrderBy(p => p.Name);
 			if (!string.IsNullOrEmpty(sort))
 			{
 				switch (sort)
@@ -42,7 +42,7 @@ namespace LinkDev.Talabat.Core.Domain.Specefications.Products
 				}
 			}
 
-			ApplyPagination((pageIndex-1) * pageSize ,pageSize);
+			ApplyPagination(pageSize*(pageIndex-1),pageSize);
 		}
 		// this constructor is created for building query that return specific product with it's brand and category
 		public ProductWithBrandAndCategorySpecifications(int id) : base(id)

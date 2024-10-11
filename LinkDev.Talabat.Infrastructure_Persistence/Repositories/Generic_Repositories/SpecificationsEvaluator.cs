@@ -26,7 +26,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 				query = query.OrderBy(spec.OredrBy);
 
 			if(spec.IsPaginationEnabled)
-				query=query.Take(spec.Take).Skip(spec.Skip);
+				query=query.Skip(spec.Skip).Take(spec.Take);
 
 
 			query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
