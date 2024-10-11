@@ -1,5 +1,4 @@
-﻿using LinkDev.Talabat.Core.Domain.Entities;
-using LinkDev.Talabat.Core.Domain.Entities.Products;
+﻿using LinkDev.Talabat.Core.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,16 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Domain.Specefications.Products
 {
-	public class ProductWithBrandAndCategorySpecifications : BaseSpecifications<Product, int>
+    public class ProductWithBrandAndCategorySpecifications : BaseSpecifications<Product, int>
 	{
 		// this constructor is created for building query that return all products with it's brands and categories
-		public ProductWithBrandAndCategorySpecifications(string? sort) : base()
+		public ProductWithBrandAndCategorySpecifications(string? sort,int? brandId, int? categoryId) : 
+			base(
+				P =>
+				(!brandId.HasValue || P.BrandId==brandId)
+				&&
+				(!categoryId.HasValue || P.CategoryId==categoryId)
+				)
 		{
 			AddIncludes();
 			AddOrderBy(P => P.Name);
