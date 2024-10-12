@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Common;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Products;
 using LinkDev.Talabat.Core.Domain.Contracts.Products;
@@ -18,17 +19,21 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
 {
     public class ProductService(IUnitOfWork _unitOfWork, IMapper mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
+        public async Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specParams)
         {
-            var spec = new ProductWithBrandAndCategorySpecifications();
+            var spec = new ProductWithBrandAndCategorySpecifications(specParams.Sort, specParams.BrandId, specParams.CategoryId,
+                specParams.PageSize,specParams.PageIndex,specParams.Search);
 
             var products = await _unitOfWork.GetRepository<Product, int>().GetAllWithSpecAsync(spec);
-            var productsToReturn = mapper.Map<IEnumerable<ProductToReturnDto>>(products);
-            return productsToReturn;
+            var data = mapper.Map<IEnumerable<ProductToReturnDto>>(products);
+
+            var countSpec = new ProductWithFilterationForCountSpecifications(specParams.BrandId, specParams.CategoryId,specParams.Search);
+            var count = await _unitOfWork.GetRepository<Product,int>().GetCountAsync(countSpec);
+            return new Pagination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize,count) {Data=data };
         }
         public async Task<ProductToReturnDto> GetProductAsync(int id)
         {
-            var spec = new ProductWithBrandAndCategorySpecifications(); 
+            var spec = new ProductWithBrandAndCategorySpecifications(id); 
             var product = await _unitOfWork.GetRepository<Product, int>().GetWithSpecAsync(spec);
             var productToReturn = mapper.Map<ProductToReturnDto>(product);
             return productToReturn;
@@ -47,5 +52,5 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
             return categoriesToReturn;
         }
 
-    }
+	}
 }

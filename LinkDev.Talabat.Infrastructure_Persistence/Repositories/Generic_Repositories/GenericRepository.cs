@@ -42,6 +42,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 		{
 			return await ApplySpecifications(spec).FirstOrDefaultAsync();
 		}
+		public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+		{
+			return await ApplySpecifications(spec).CountAsync();
+		}
 		public async Task AddAsync(TEntity entity) => await _dbContext.AddAsync(entity);
 
         public void Delete(TEntity entity) => _dbContext.Remove(entity);
@@ -53,8 +57,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 
             return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec);
         }
+		#endregion
 
-        #endregion
-
-    }
+	}
 }
