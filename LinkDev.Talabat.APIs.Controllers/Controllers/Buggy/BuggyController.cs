@@ -1,5 +1,6 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
 using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
+using LinkDev.Talabat.APIs.Controllers.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
 		[HttpGet("notfound")]
 		public IActionResult GetNotFoundRequest()
 		{ 
-		 return NotFound(new ApiResponse(404));
+			throw new NotFoundException();
+		 //return NotFound(new ApiResponse(404));
 		}
 
 		[HttpGet("badrequest")]
