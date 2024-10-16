@@ -1,5 +1,6 @@
-﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
-using LinkDev.Talabat.APIs.Controllers.Exceptions;
+﻿using Azure;
+using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
+using LinkDev.Talabat.Core.Application.Exceptions;
 using System.Net;
 
 namespace LinkDev.Talabat.APIs.Middlewares
@@ -33,36 +34,54 @@ namespace LinkDev.Talabat.APIs.Middlewares
 			}
 			catch (Exception ex)
 			{
-				ApiResponse response;
-				switch (ex)
+
+				#region Logging :TODO
+				if (_environment.IsDevelopment())
 				{
-					case NotFoundException:
-						httpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-						httpContext.Response.ContentType = "application/json";
-						response = new ApiResponse(404, ex.Message);
+					_logger.LogError(ex, ex.Message);
 
-						await httpContext.Response.WriteAsync(response.ToString());
-						break;
-					default:
-
-						if (_environment.IsDevelopment())
-						{
-							_logger.LogError(ex, ex.Message);
-							response = new ApiExceptionResponse((int)HttpStatusCode.InternalServerError,
-							ex.Message, ex.StackTrace?.ToString());
-						}
-						response = new ApiExceptionResponse((int)HttpStatusCode.InternalServerError);
-						httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-						httpContext.Response.ContentType = "application/json";
-						await httpContext.Response.WriteAsync(response.ToString());
-						break;
 				}
+				else
+				{
+				} 
+				#endregion
+
+				await HandleExceptions(httpContext, ex);
 			}
 
 		}
 
+		private async Task HandleExceptions(HttpContext httpContext, Exception ex)
+		{
+			ApiResponse response;
+			switch (ex)
+			{
+				case NotFoundException:
+					httpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+					httpContext.Response.ContentType = "application/json";
+					response = new ApiResponse(404, ex.Message);
 
+					await httpContext.Response.WriteAsync(response.ToString());
+					break;
 
+				case BadRequestException:
+					httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+					httpContext.Response.ContentType = "application/json";
+					response = new ApiResponse(400, ex.Message);
+					await httpContext.Response.WriteAsync(response.ToString());
+					break;
 
+				default:
+				response = _environment.IsDevelopment() ? 
+						new ApiExceptionResponse((int)HttpStatusCode.InternalServerError,ex.Message, ex.StackTrace?.ToString())
+						:
+						new ApiExceptionResponse((int)HttpStatusCode.InternalServerError);
+
+					httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+					httpContext.Response.ContentType = "application/json";
+					await httpContext.Response.WriteAsync(response.ToString());
+					break;
+			}
+		}
 	}
 }
