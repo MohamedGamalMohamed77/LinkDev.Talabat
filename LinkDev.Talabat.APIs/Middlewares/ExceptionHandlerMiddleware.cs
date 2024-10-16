@@ -5,14 +5,14 @@ using System.Net;
 
 namespace LinkDev.Talabat.APIs.Middlewares
 {
-	public class CustomExceptionHandlerMiddleware
+	public class ExceptionHandlerMiddleware
 	{
 		private readonly RequestDelegate _next;
-		private readonly ILogger<CustomExceptionHandlerMiddleware> _logger;
+		private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 		private readonly IWebHostEnvironment _environment;
 
-		public CustomExceptionHandlerMiddleware(RequestDelegate next,
-			ILogger<CustomExceptionHandlerMiddleware> logger, IWebHostEnvironment environment)
+		public ExceptionHandlerMiddleware(RequestDelegate next,
+			ILogger<ExceptionHandlerMiddleware> logger, IWebHostEnvironment environment)
 		{
 			_next = next;
 			_logger = logger;
