@@ -1,12 +1,7 @@
 ﻿using LinkDev.Talabat.Core.Domain.Common;
 using LinkDev.Talabat.Core.Domain.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Repositories
+namespace LinkDev.Talabat.Infrastructure.Persistence.Generic_Repositories
 {
 	public static class SpecificationsEvaluator<TEntity, TKey>
 		where TEntity : BaseEntity<TKey>

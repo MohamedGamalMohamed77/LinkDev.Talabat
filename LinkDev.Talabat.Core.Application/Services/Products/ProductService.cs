@@ -2,11 +2,12 @@
 using LinkDev.Talabat.Core.Aplication.Abstraction.Common;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Products;
+using LinkDev.Talabat.Core.Application.Exceptions;
 using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Core.Domain.Entities;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Core.Domain.Specefications.Products;
-using LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Repositories;
+using LinkDev.Talabat.Infrastructure.Persistence.Generic_Repositories;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Identity.Client;
 using System;
@@ -35,7 +36,11 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
         {
             var spec = new ProductWithBrandAndCategorySpecifications(id); 
             var product = await _unitOfWork.GetRepository<Product, int>().GetWithSpecAsync(spec);
-            var productToReturn = mapper.Map<ProductToReturnDto>(product);
+            if (product == null)
+            
+                throw new NotFoundException(nameof(product), id);
+			var productToReturn = mapper.Map<ProductToReturnDto>(product);
+        
             return productToReturn;
         }
         public async Task<IEnumerable<BrandDto>> GetBrandsAsync()

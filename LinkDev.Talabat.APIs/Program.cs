@@ -1,8 +1,12 @@
-using LinkDev.Talabat.APIs.Extensions;
+ using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
 using LinkDev.Talabat.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Mvc;
+using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
+using LinkDev.Talabat.APIs.Middlewares;
+using LinkDev.Talabat.Infrastructure;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -18,6 +22,24 @@ namespace LinkDev.Talabat.APIs
 
 			webApplicationBuilder.Services
 				.AddControllers()
+				.ConfigureApiBehaviorOptions(options => 
+				{ 
+					options.SuppressModelStateInvalidFilter = false;
+					options.InvalidModelStateResponseFactory = (actionContext) =>
+					{
+						var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
+															.Select(p => new ApiValidationErrorResponse.ValidationError()
+															{
+																Field = p.Key,
+																Errors = p.Value!.Errors.Select(E => E.ErrorMessage)
+															});
+						return new BadRequestObjectResult(new ApiValidationErrorResponse()
+						{
+							Errors = errors
+						});
+
+					};
+				})
 				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // register required services
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -30,20 +52,23 @@ namespace LinkDev.Talabat.APIs
 			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
 
 			webApplicationBuilder.Services.AddApplicationServices();
+			webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
 
 
 			#endregion
-			
+
 			var app = webApplicationBuilder.Build();
 
 			#region Databases Intialization
 
 			await app.IntializeStoreContextAsync();
-			
+
 			#endregion
 
 			// Configure the HTTP request pipeline.
 			#region Configure Kestral Middlewares
+
+			app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 			if (app.Environment.IsDevelopment())
 			{
@@ -52,7 +77,7 @@ namespace LinkDev.Talabat.APIs
 			}
 
 			app.UseHttpsRedirection();
-
+			app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 			app.UseAuthorization();
 
 			app.UseStaticFiles();
