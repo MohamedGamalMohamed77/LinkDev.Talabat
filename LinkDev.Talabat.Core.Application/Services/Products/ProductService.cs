@@ -7,7 +7,7 @@ using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Core.Domain.Entities;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Core.Domain.Specefications.Products;
-using LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Repositories;
+using LinkDev.Talabat.Infrastructure.Persistence.Generic_Repositories;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Identity.Client;
 using System;
