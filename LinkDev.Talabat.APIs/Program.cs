@@ -6,6 +6,7 @@ using LinkDev.Talabat.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
 using LinkDev.Talabat.APIs.Middlewares;
+using LinkDev.Talabat.Infrastructure;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -51,10 +52,11 @@ namespace LinkDev.Talabat.APIs
 			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
 
 			webApplicationBuilder.Services.AddApplicationServices();
+			webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
 
 
 			#endregion
-			
+
 			var app = webApplicationBuilder.Build();
 
 			#region Databases Intialization
