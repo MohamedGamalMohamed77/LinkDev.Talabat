@@ -64,12 +64,12 @@ namespace LinkDev.Talabat.APIs
 					idenityOptions.SignIn.RequireConfirmedEmail = true;
 					idenityOptions.SignIn.RequireConfirmedPhoneNumber = true;
 
-					idenityOptions.Password.RequireNonAlphanumeric = true;
-					idenityOptions.Password.RequiredUniqueChars = 2;
-					idenityOptions.Password.RequiredLength = 6;
-					idenityOptions.Password.RequireDigit = true;
-					idenityOptions.Password.RequireUppercase = true;
-					idenityOptions.Password.RequireLowercase = true;
+					//idenityOptions.Password.RequireNonAlphanumeric = true;
+					//idenityOptions.Password.RequiredUniqueChars = 2;
+					//idenityOptions.Password.RequiredLength = 6;
+					//idenityOptions.Password.RequireDigit = true;
+					//idenityOptions.Password.RequireUppercase = true;
+					//idenityOptions.Password.RequireLowercase = true;
 
 					idenityOptions.User.RequireUniqueEmail = true;
 
