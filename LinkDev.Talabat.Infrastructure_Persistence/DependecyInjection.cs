@@ -1,7 +1,10 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts.Products;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbIntializers;
+using LinkDev.Talabat.Core.Domain.Contracts.Products;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence._Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -11,10 +14,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 {
     public static class DependecyInjection 
 	{
-		public static IServiceCollection AddPersistenceServices(this IServiceCollection Services, IConfiguration Configuration)
+		public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration Configuration)
 		{
 			#region Store Context
-			Services.AddDbContext<StoreDbContext>((options) =>
+			services.AddDbContext<StoreDbContext>((options) =>
 				{
 					options
 					.UseLazyLoadingProxies()
@@ -22,24 +25,27 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 				});
 
 
-			Services.AddScoped(typeof(IStoreContextIntializer), typeof(StoreDbContextIntializer));
-			Services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+			services.AddScoped(typeof(IStoreDbIntializer), typeof(StoreDbIntializer));
+			services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
 			#endregion
 
 			#region IdentityDbContext
-			Services.AddDbContext<StoreIdentityDbContext>((options) =>
+			services.AddDbContext<StoreIdentityDbContext>((options) =>
 			{
 				options
 				.UseLazyLoadingProxies()
 				.UseSqlServer(Configuration.GetConnectionString("IdentityContext"));
 			});
+			services.AddScoped(typeof(IStoreIdentityDbIntializer), typeof(StoreIdentityDbIntializer));
+
+
 			#endregion
 
+			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
-			Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
-			return Services;
+			return services;
 		}
 	}
 }

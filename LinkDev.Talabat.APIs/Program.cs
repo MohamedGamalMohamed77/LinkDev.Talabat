@@ -1,12 +1,15 @@
- using LinkDev.Talabat.APIs.Extensions;
-using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
+using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
-using LinkDev.Talabat.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Mvc;
-using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
-using LinkDev.Talabat.APIs.Middlewares;
+using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
+using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence._Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -48,12 +51,34 @@ namespace LinkDev.Talabat.APIs
 
 			webApplicationBuilder.Services.AddHttpContextAccessor();
 			webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserServices));
-			
-			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
+
 
 			webApplicationBuilder.Services.AddApplicationServices();
+			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
 			webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
 
+
+			webApplicationBuilder.Services.AddIdentity<ApplicationUser, IdentityRole>((idenityOptions)=>
+				{
+					idenityOptions.SignIn.RequireConfirmedAccount = true;
+					idenityOptions.SignIn.RequireConfirmedEmail = true;
+					idenityOptions.SignIn.RequireConfirmedPhoneNumber = true;
+
+					idenityOptions.Password.RequireNonAlphanumeric = true;
+					idenityOptions.Password.RequiredUniqueChars = 2;
+					idenityOptions.Password.RequiredLength = 6;
+					idenityOptions.Password.RequireDigit = true;
+					idenityOptions.Password.RequireUppercase = true;
+					idenityOptions.Password.RequireLowercase = true;
+
+					idenityOptions.User.RequireUniqueEmail = true;
+
+					idenityOptions.Lockout.AllowedForNewUsers = true;
+					idenityOptions.Lockout.MaxFailedAccessAttempts = 5;
+					idenityOptions.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromHours(12);
+
+				})
+				.AddEntityFrameworkStores<StoreIdentityDbContext>();
 
 			#endregion
 
@@ -61,7 +86,7 @@ namespace LinkDev.Talabat.APIs
 
 			#region Databases Intialization
 
-			await app.IntializeStoreContextAsync();
+			await app.IntializeDbAsync();
 
 			#endregion
 
