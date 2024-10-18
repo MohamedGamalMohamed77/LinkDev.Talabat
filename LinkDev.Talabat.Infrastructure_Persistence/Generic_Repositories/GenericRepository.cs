@@ -5,7 +5,7 @@ using LinkDev.Talabat.Infrastructure.Persistence.Data;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Generic_Repositories
 {
-	public class GenericRepository<TEntity, TKey>(StoreContext _dbContext) : IGenericRepository<TEntity, TKey>
+	public class GenericRepository<TEntity, TKey>(StoreDbContext _dbContext) : IGenericRepository<TEntity, TKey>
         where TEntity : BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {

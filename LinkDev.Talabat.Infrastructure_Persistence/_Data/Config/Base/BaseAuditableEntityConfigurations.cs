@@ -8,21 +8,20 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Config.Base
 {
-	public class BaseEntiyConfiguration<TEntity, TKey> : IEntityTypeConfiguration<TEntity>
+	public class BaseAuditableEntityConfigurations<TEntity,TKey>: BaseEntiyConfigurations<TEntity, TKey>  
 		where TEntity : BaseAuditableEntity<TKey> where TKey : IEquatable<TKey>
 	{
-		public virtual void Configure(EntityTypeBuilder<TEntity> builder)
+		public override void Configure(EntityTypeBuilder<TEntity> builder)
 		{
-			builder.Property(E=>E.Id).ValueGeneratedOnAdd();
-
+			base.Configure(builder);
 			builder.Property(E => E.CreatedBy).IsRequired();
 			builder.Property(E => E.CreatedOn).IsRequired();
 
 			builder.Property(E => E.LastModifiedBy).IsRequired();
 			builder.Property(E => E.LastModifiedOn).IsRequired();
 
-
-
 		}
+
+
 	}
 }

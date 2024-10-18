@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-    internal class StoreContextIntializer(StoreContext _dbContext) : IStoreContextIntializer
+    internal class StoreDbContextIntializer(StoreDbContext _dbContext) : IStoreContextIntializer
 	{
 
 		public async Task IntializeAsync()

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Config.Products
 {
-	public class ProductBrandConfigurations : BaseEntiyConfiguration<ProductBrand, int>
+	public class ProductBrandConfigurations : BaseEntiyConfigurations<ProductBrand, int>
 	{
 		public override void Configure(EntityTypeBuilder<ProductBrand> builder)
 		{
