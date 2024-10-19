@@ -32,6 +32,7 @@ namespace LinkDev.Talabat.Core.Application
 				return()=> new BasketService(basketRepository, mapper, configuration);
 			});
 
+
 			return services;
 		}
 
