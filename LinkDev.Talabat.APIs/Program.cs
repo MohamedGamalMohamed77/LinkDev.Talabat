@@ -3,6 +3,7 @@ using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Auth;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
@@ -56,30 +57,8 @@ namespace LinkDev.Talabat.APIs
 			webApplicationBuilder.Services.AddApplicationServices();
 			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
 			webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
-
-
-			webApplicationBuilder.Services.AddIdentity<ApplicationUser, IdentityRole>((idenityOptions)=>
-				{
-					idenityOptions.SignIn.RequireConfirmedAccount = true;
-					idenityOptions.SignIn.RequireConfirmedEmail = true;
-					idenityOptions.SignIn.RequireConfirmedPhoneNumber = true;
-
-					//idenityOptions.Password.RequireNonAlphanumeric = true;
-					//idenityOptions.Password.RequiredUniqueChars = 2;
-					//idenityOptions.Password.RequiredLength = 6;
-					//idenityOptions.Password.RequireDigit = true;
-					//idenityOptions.Password.RequireUppercase = true;
-					//idenityOptions.Password.RequireLowercase = true;
-
-					idenityOptions.User.RequireUniqueEmail = true;
-
-					idenityOptions.Lockout.AllowedForNewUsers = true;
-					idenityOptions.Lockout.MaxFailedAccessAttempts = 5;
-					idenityOptions.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromHours(12);
-
-				})
-				.AddEntityFrameworkStores<StoreIdentityDbContext>();
-
+			webApplicationBuilder.Services.AddIdentityServices(webApplicationBuilder.Configuration);
+			
 			#endregion
 
 			var app = webApplicationBuilder.Build();
