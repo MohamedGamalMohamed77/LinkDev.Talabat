@@ -1,6 +1,11 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts.Products;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbIntializers;
+using LinkDev.Talabat.Core.Domain.Contracts.Products;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
+using LinkDev.Talabat.Infrastructure.Persistence._Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,21 +14,38 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 {
     public static class DependecyInjection 
 	{
-		public static IServiceCollection AddPersistenceServices(this IServiceCollection Services, IConfiguration Configuration)
+		public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration Configuration)
 		{
-			Services.AddDbContext<StoreContext>((options) =>
+			#region Store Context
+			services.AddDbContext<StoreDbContext>((options) =>
+				{
+					options
+					.UseLazyLoadingProxies()
+					.UseSqlServer(Configuration.GetConnectionString("StoreContext"));
+				});
+
+
+			services.AddScoped(typeof(IStoreDbIntializer), typeof(StoreDbIntializer));
+			services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+
+			#endregion
+
+			#region IdentityDbContext
+			services.AddDbContext<StoreIdentityDbContext>((options) =>
 			{
 				options
 				.UseLazyLoadingProxies()
-				.UseSqlServer(Configuration.GetConnectionString("StoreContext"));
+				.UseSqlServer(Configuration.GetConnectionString("IdentityContext"));
 			});
+			services.AddScoped(typeof(IStoreIdentityDbIntializer), typeof(StoreIdentityDbIntializer));
 
-			
-			Services.AddScoped(typeof(IStoreContextIntializer), typeof(StoreContextIntializer));
-			Services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
-			Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
-			return Services;
+			#endregion
+
+			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
+
+
+			return services;
 		}
 	}
 }

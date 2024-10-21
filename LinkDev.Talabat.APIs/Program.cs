@@ -1,12 +1,16 @@
- using LinkDev.Talabat.APIs.Extensions;
-using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
+using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
-using LinkDev.Talabat.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Mvc;
-using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
-using LinkDev.Talabat.APIs.Middlewares;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Auth;
+using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
+using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence._Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -48,20 +52,20 @@ namespace LinkDev.Talabat.APIs
 
 			webApplicationBuilder.Services.AddHttpContextAccessor();
 			webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserServices));
-			
-			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
+
 
 			webApplicationBuilder.Services.AddApplicationServices();
+			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
 			webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
-
-
+			webApplicationBuilder.Services.AddIdentityServices(webApplicationBuilder.Configuration);
+			
 			#endregion
 
 			var app = webApplicationBuilder.Build();
 
 			#region Databases Intialization
 
-			await app.IntializeStoreContextAsync();
+			await app.IntializeDbAsync();
 
 			#endregion
 
@@ -82,6 +86,9 @@ namespace LinkDev.Talabat.APIs
 
 			app.UseStaticFiles();
 			app.MapControllers();
+
+			app.UseAuthentication();
+			app.UseAuthorization();
 
 			#endregion
 			app.Run();
