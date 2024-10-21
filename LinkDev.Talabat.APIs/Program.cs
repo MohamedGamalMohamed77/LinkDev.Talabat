@@ -87,6 +87,9 @@ namespace LinkDev.Talabat.APIs
 			app.UseStaticFiles();
 			app.MapControllers();
 
+			app.UseAuthentication();
+			app.UseAuthorization();
+
 			#endregion
 			app.Run();
 		}

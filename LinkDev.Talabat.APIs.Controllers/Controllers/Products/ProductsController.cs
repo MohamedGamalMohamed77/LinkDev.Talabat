@@ -1,20 +1,16 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
-using LinkDev.Talabat.APIs.Controllers.Controllers.Errors;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Common;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 {
-    public class ProductsController(IServiceManager serviceManager) : BaseApiController
+	public class ProductsController(IServiceManager serviceManager) : BaseApiController
 	{
-
+		[Authorize]
 		[HttpGet] //GET: /api/product
 		public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams specParams)
 		{
