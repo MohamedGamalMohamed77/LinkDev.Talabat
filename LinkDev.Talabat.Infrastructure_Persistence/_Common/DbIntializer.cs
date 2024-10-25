@@ -10,7 +10,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Common
 {
 	public abstract class DbIntializer(DbContext _dbContext) : IDbIntializer
 	{
-		public virtual async Task IntializeAsync()
+		public virtual  async Task IntializeAsync()
 		{
 			var pendingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();
 

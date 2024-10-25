@@ -3,13 +3,9 @@ using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
-using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Auth;
 using LinkDev.Talabat.Core.Application;
-using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence;
-using LinkDev.Talabat.Infrastructure.Persistence._Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs
@@ -20,32 +16,32 @@ namespace LinkDev.Talabat.APIs
 		{
 			var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
+
 			// Add services to the container.
 
 			#region Configure Services
 
 			webApplicationBuilder.Services
 				.AddControllers()
-				.ConfigureApiBehaviorOptions(options => 
-				{ 
+				.ConfigureApiBehaviorOptions(options =>
+				{
 					options.SuppressModelStateInvalidFilter = false;
 					options.InvalidModelStateResponseFactory = (actionContext) =>
 					{
-						var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
-															.Select(p => new ApiValidationErrorResponse.ValidationError()
-															{
-																Field = p.Key,
-																Errors = p.Value!.Errors.Select(E => E.ErrorMessage)
-															});
+						var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
+											   .Select(P => new ApiValidationErrorResponse.ValidationError()
+											   {
+												   Field = P.Key,
+												   Errors = P.Value!.Errors.Select(E => E.ErrorMessage)
+											   });
 						return new BadRequestObjectResult(new ApiValidationErrorResponse()
 						{
 							Errors = errors
 						});
-
 					};
 				})
 				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // register required services
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+																					   // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 			webApplicationBuilder.Services.AddEndpointsApiExplorer();
 			webApplicationBuilder.Services.AddSwaggerGen();

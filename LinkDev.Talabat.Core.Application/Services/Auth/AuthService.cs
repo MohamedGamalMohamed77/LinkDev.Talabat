@@ -67,18 +67,27 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 		private async Task<string> GenerateTokenAsync(ApplicationUser user)
 		{
 
+			var userClaims = await userManager.GetClaimsAsync(user);
+			var rolesAsClaims = new List<Claim>();
+
+			var roles = await userManager.GetRolesAsync(user);
+
+
+			foreach (var role in roles)
+				rolesAsClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+
 			var privateClaims = new List<Claim>()
 			{
 				new Claim(ClaimTypes.PrimarySid,user.Id),
 				new Claim(ClaimTypes.Email,user.Email!),
 				new Claim(ClaimTypes.GivenName,user.DisplayName)
-			}.Union(await userManager.GetClaimsAsync(user)).ToList();
+			}.Union(userClaims)
+			 .Union(rolesAsClaims)
+			 .ToList();
 
-			
-			foreach (var role in await userManager.GetRolesAsync(user))
-				privateClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
 
-			var authKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+
+			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
 			var tokenObj = new JwtSecurityToken(
 
@@ -86,7 +95,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 				issuer: _jwtSettings.Issuer,
 				expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
 				claims:privateClaims,
-				signingCredentials:new SigningCredentials(authKey,SecurityAlgorithms.HmacSha256)
+				signingCredentials:new SigningCredentials(symmetricSecurityKey,SecurityAlgorithms.HmacSha256)
 
 				);
 			return new JwtSecurityTokenHandler().WriteToken(tokenObj);

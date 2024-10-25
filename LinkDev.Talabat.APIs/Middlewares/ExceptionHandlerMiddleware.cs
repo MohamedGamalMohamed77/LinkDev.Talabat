@@ -68,7 +68,7 @@ namespace LinkDev.Talabat.APIs.Middlewares
 					httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 					httpContext.Response.ContentType = "application/json";
 
-					response = new ApiValidationErrorResponse(ex.Message) { Errors = validationException.Errors };
+					response = new ApiValidationErrorResponse(ex.Message) { Errors = (IEnumerable<ApiValidationErrorResponse.ValidationError>)validationException.Errors };
 
 					await httpContext.Response.WriteAsync(response.ToString());
 					break;
