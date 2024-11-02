@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LinkDev.Talabat.Infrastructure.Persistence._Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class Identity01Migration : Migration
+    public partial class Identity01Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,23 +73,23 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Addrsses",
+                name: "Addresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    City = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Country = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addrsses", x => x.Id);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addrsses_AspNetUsers_UserId",
+                        name: "FK_Addresses_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -182,8 +182,8 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addrsses_UserId",
-                table: "Addrsses",
+                name: "IX_Addresses_UserId",
+                table: "Addresses",
                 column: "UserId",
                 unique: true);
 
@@ -231,7 +231,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Addrsses");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

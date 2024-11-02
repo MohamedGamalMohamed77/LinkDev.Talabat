@@ -19,7 +19,6 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Errors
             public required string Field { get; set; }
             public required IEnumerable<string> Errors { get; set; }
 
-
         }
 
 

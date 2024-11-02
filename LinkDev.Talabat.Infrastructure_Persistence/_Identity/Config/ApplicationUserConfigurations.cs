@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.Core.Domain.Entities.Identity;
+using LinkDev.Talabat.Infrastructure.Persistence._Common;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Identity.Config
 {
+	[DbContextType(typeof(StoreIdentityDbContext))]
 	public class ApplicationUserConfigurations : IEntityTypeConfiguration<ApplicationUser>
 	{
 		public virtual void Configure(EntityTypeBuilder<ApplicationUser> builder)
@@ -15,7 +17,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity.Config
 			builder.Property(U=>U.DisplayName)
 				.HasColumnType("varchar")
 				.HasMaxLength(100)
-				.IsRequired();
+				.IsRequired(true);
 
 			builder.HasOne(U => U.Address)
 				   .WithOne(A => A.User)

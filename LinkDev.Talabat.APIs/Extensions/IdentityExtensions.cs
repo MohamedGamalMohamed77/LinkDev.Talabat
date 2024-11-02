@@ -13,7 +13,7 @@ namespace LinkDev.Talabat.APIs.Extensions
 {
 	public static class IdentityExtensions
 	{
-		public static IServiceCollection AddIdentityServices(this IServiceCollection services,IConfiguration configuration)
+		public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.Configure<JwtSettings>(configuration.GetSection("JWTSettings"));
 
@@ -50,24 +50,24 @@ namespace LinkDev.Talabat.APIs.Extensions
 				authenticationOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				authenticationOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 			})
-				.AddJwtBearer((options)=>
+				.AddJwtBearer((options) =>
 			{
 				options.TokenValidationParameters = new TokenValidationParameters()
 				{
-					ValidateAudience = true,
 					ValidateIssuer = true,
+					ValidateAudience = true,
 					ValidateLifetime = true,
 					ValidateIssuerSigningKey = true,
 
-					ValidAudience = configuration["JwtSettings:Audience"],
 					ValidIssuer = configuration["JwtSettings:Issuer"],
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Issuer"]!)),
-					ClockSkew=TimeSpan.Zero
+					ValidAudience = configuration["JwtSettings:Audience"],
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
+					ClockSkew = TimeSpan.Zero
 
 				};
 
 			});
-				
+
 
 			services.AddScoped(typeof(IAuthService), typeof(AuthService));
 			services.AddScoped(typeof(Func<IAuthService>), (serviceProvider) =>

@@ -24,7 +24,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity
 				PhoneNumber = "01122334455"
 			};
 			
-			await _userManager.CreateAsync(user,"P@ssword");
+			await _userManager.CreateAsync(user,"P@ssw0rd");
 		}
 
 	}
