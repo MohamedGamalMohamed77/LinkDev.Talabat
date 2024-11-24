@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
+﻿using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Basket;
 using LinkDev.Talabat.Core.Application.Mapping;
 using LinkDev.Talabat.Core.Application.Services;
-using LinkDev.Talabat.Core.Application.Services.Basket;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Basket_Repository;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkDev.Talabat.Core.Application

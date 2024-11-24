@@ -1,5 +1,4 @@
-﻿
-using LinkDev.Talabat.Core.Domain.Entities.Products;
+﻿using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Common;
 using System.Reflection;
 
