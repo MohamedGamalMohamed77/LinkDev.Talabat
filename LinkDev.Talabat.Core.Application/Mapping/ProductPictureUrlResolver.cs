@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LinkDev.Talabat.Core.Application.Mapping
 {
-	public class ProductPictureUlResolver(IConfiguration configuration) : IValueResolver<Product, ProductToReturnDto, string?>
+	public class ProductPictureUrlResolver(IConfiguration configuration) : IValueResolver<Product, ProductToReturnDto, string?>
 	{
 
 		public string? Resolve(Product source, ProductToReturnDto destination, string? destMember, ResolutionContext context)
