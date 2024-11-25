@@ -15,7 +15,7 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Orders
 
 		public required Address ShippingAddress { get; set; }
 
-		public int? DeliveryhMethodId { get; set; }
+		public int? DeliveryMethodId { get; set; }
 		public virtual DeliveryMethod? DeliveryMethod { get; set; }
 
 

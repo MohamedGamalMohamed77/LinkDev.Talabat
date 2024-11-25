@@ -30,7 +30,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Config.Orders
 
 			builder.HasOne(order => order.DeliveryMethod)
 				.WithMany()
-				.HasForeignKey(order => order.DeliveryhMethodId)
+				.HasForeignKey(order => order.DeliveryMethodId)
 				.OnDelete(DeleteBehavior.SetNull);
 
 			builder.HasMany(order => order.Items)
