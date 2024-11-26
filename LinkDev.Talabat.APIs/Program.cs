@@ -3,9 +3,13 @@ using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Basket;
 using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.Core.Application.Services.Basket;
+using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs
@@ -42,7 +46,7 @@ namespace LinkDev.Talabat.APIs
 				})
 				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // Regester Required Services by ASP.NET Core Web APIs to DI Container.
 
-
+			//webApplicationBuilder.Services.AddScoped(typeof(IBasketService),typeof(BasketService));
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			webApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
@@ -50,7 +54,7 @@ namespace LinkDev.Talabat.APIs
 			//webApplicationBuilder.Services.AddScoped(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
 			webApplicationBuilder.Services.AddHttpContextAccessor().AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
 
-
+			
 
 			webApplicationBuilder.Services.AddApplicationServices();
 			webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
