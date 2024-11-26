@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class OrderModuleMigraion : Migration
+    public partial class OrderModuleMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     ShippingAddress_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShippingAddress_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShippingAddress_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeliveryhMethodId = table.Column<int>(type: "int", nullable: true),
+                    DeliveryMethodId = table.Column<int>(type: "int", nullable: true),
                     Subtotal = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -53,8 +53,8 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_DeliveryMethods_DeliveryhMethodId",
-                        column: x => x.DeliveryhMethodId,
+                        name: "FK_Orders_DeliveryMethods_DeliveryMethodId",
+                        column: x => x.DeliveryMethodId,
                         principalTable: "DeliveryMethods",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
@@ -94,9 +94,9 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_DeliveryhMethodId",
+                name: "IX_Orders_DeliveryMethodId",
                 table: "Orders",
-                column: "DeliveryhMethodId");
+                column: "DeliveryMethodId");
         }
 
         /// <inheritdoc />

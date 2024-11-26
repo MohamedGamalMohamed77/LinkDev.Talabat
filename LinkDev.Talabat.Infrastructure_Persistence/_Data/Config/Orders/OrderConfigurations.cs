@@ -37,9 +37,6 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Config.Orders
 				.WithOne()
 				.OnDelete(DeleteBehavior.Cascade);
 
-
-
-
 		}
 
 	}

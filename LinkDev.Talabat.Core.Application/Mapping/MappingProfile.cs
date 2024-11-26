@@ -32,7 +32,7 @@ namespace LinkDev.Talabat.Core.Application.Mapping
 			CreateMap<BasketItem, BasketItemDto>().ReverseMap();
 			CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
 
-			CreateMap<Order, OrderToRetunDto>()
+			CreateMap<Order, OrderToReturnDto>()
 				.ForMember(dest => dest.DeliveryMethod, options => options.MapFrom(src => src.DeliveryMethod!.ShortName));
 
 			CreateMap<OrderItem, OrderItemDto>()

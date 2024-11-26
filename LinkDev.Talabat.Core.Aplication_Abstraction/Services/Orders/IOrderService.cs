@@ -9,9 +9,9 @@ namespace LinkDev.Talabat.Core.Aplication.Abstraction.Services.Orders
 {
 	public interface IOrderService
 	{
-		Task<OrderToRetunDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order);
-		Task<OrderToRetunDto> GetOrderByIdAsync(string buyerEmail, int orderId);
-		Task<IEnumerable<OrderToRetunDto>> GetOrdersForUserAsync(string buyerEmail);
+		Task<OrderToReturnDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order);
+		Task<OrderToReturnDto> GetOrderByIdAsync(string buyerEmail, int orderId);
+		Task<IEnumerable<OrderToReturnDto>> GetOrdersForUserAsync(string buyerEmail);
 		Task<IEnumerable<DeliveryMethodDto>> GetDeliveryMethodAsync();
 
 

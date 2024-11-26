@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20241124053719_OrderModuleMigraion")]
-    partial class OrderModuleMigraion
+    [Migration("20241126104822_OrderModuleMigration")]
+    partial class OrderModuleMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,7 +75,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DeliveryhMethodId")
+                    b.Property<int?>("DeliveryMethodId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
@@ -101,7 +101,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeliveryhMethodId");
+                    b.HasIndex("DeliveryMethodId");
 
                     b.ToTable("Orders");
                 });
@@ -267,7 +267,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                 {
                     b.HasOne("LinkDev.Talabat.Core.Domain.Entities.Orders.DeliveryMethod", "DeliveryMethod")
                         .WithMany()
-                        .HasForeignKey("DeliveryhMethodId")
+                        .HasForeignKey("DeliveryMethodId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.Address", "ShippingAddress", b1 =>
@@ -316,7 +316,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.ProductOrderItem", "Product", b1 =>
+                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.ProductItemOrdered", "Product", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("int");

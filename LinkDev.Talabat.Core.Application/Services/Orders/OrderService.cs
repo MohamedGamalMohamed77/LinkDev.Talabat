@@ -3,6 +3,7 @@ using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Orders;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Basket;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Orders;
 using LinkDev.Talabat.Core.Application.Exceptions;
+using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Core.Domain.Specefications.Orders;
@@ -15,9 +16,9 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services.Orders
 {
-	public class OrderService(UnitOfWork unitOfWork, IMapper mapper, IBasketService basketService) : IOrderService
+	public class OrderService(IUnitOfWork unitOfWork, IMapper mapper, IBasketService basketService) : IOrderService
 	{
-		public async Task<OrderToRetunDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order)
+		public async Task<OrderToReturnDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order)
 		{
 			//1-get basket fom basket repo
 			var basket = await basketService.GetCustomerBasketAsync(order.BasketId);
@@ -75,16 +76,16 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 			//6-save to database
 			var created = await unitOfWork.CompeleteAsync() > 0;
 			if (!created) throw new BadRequestException("an error has been occured during creating order");
-			return mapper.Map<OrderToRetunDto>(orderToCreate);
+			return mapper.Map<OrderToReturnDto>(orderToCreate);
 
 		}
-		public async Task<IEnumerable<OrderToRetunDto>> GetOrdersForUserAsync(string buyerEmail)
+		public async Task<IEnumerable<OrderToReturnDto>> GetOrdersForUserAsync(string buyerEmail)
 		{
 			var orderSpecs = new OrderSpecifications(buyerEmail);
 			var orders = await unitOfWork.GetRepository<Order, int>().GetAllWithSpecAsync(orderSpecs);
-			return mapper.Map<IEnumerable<OrderToRetunDto>>(orders);
+			return mapper.Map<IEnumerable<OrderToReturnDto>>(orders);
 		}
-		public async Task<OrderToRetunDto> GetOrderByIdAsync(string buyerEmail, int orderId)
+		public async Task<OrderToReturnDto> GetOrderByIdAsync(string buyerEmail, int orderId)
 		{
 			var orderSpecs = new OrderSpecifications(buyerEmail,orderId);
 			
@@ -92,7 +93,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 
 			if (order is null) throw new NotFoundException(nameof(Order), orderId);
 
-			return mapper.Map<OrderToRetunDto>(order);
+			return mapper.Map<OrderToReturnDto>(order);
 		}
 		public async Task<IEnumerable<DeliveryMethodDto>> GetDeliveryMethodAsync()
 		{
