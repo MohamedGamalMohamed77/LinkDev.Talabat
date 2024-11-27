@@ -34,8 +34,17 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Account
 		{
 			var result = await serviceManager.AuthService.GetCurrentUser(User);
 			return Ok(result);
-			
 		}
+
+		[Authorize]
+		[HttpGet("address")]
+		public async Task<ActionResult<UserDto>> GetUserAddress()
+		{
+			var result = await serviceManager.AuthService.GetUserAddress(User);
+			return Ok(result);
+		}
+
+
 
 	}
 }

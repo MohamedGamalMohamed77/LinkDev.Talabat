@@ -8,24 +8,21 @@ using LinkDev.Talabat.Core.Domain.Entities.Basket;
 using LinkDev.Talabat.Core.Domain.Entities.Employees;
 using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+using UserAddress = LinkDev.Talabat.Core.Domain.Entities.Identity.Address;
+using OrderAddress = LinkDev.Talabat.Core.Domain.Entities.Orders.Address;
 namespace LinkDev.Talabat.Core.Application.Mapping
 {
-    public class MappingProfile : Profile
+	public class MappingProfile : Profile
 	{
-		public MappingProfile() 
+		public MappingProfile()
 		{
 			CreateMap<Product, ProductToReturnDto>()
 					.ForMember(P => P.Brand, O => O.MapFrom(src => src.Brand!.Name))
 					.ForMember(P => P.Category, O => O.MapFrom(src => src.Category!.Name))
 					.ForMember(P => P.PictureUrl, O => O.MapFrom<ProductPictureUrlResolver>());
 
-			CreateMap<ProductBrand,BrandDto>();
+			CreateMap<ProductBrand, BrandDto>();
 			CreateMap<ProductCategory, CategoryDto>();
 			CreateMap<Employee, EmployeeToReturnDto>();
 
@@ -40,10 +37,11 @@ namespace LinkDev.Talabat.Core.Application.Mapping
 				.ForMember(dest => dest.ProductName, options => options.MapFrom(src => src.Product.ProductName))
 				.ForMember(dest => dest.PictureUrl, options => options.MapFrom<OrderItemPictureUrlResolver>());
 
-			CreateMap<Address, AddressDto>().ReverseMap();
+			CreateMap<OrderAddress, AddressDto>().ReverseMap();
 
 			CreateMap<DeliveryMethod, DeliveryMethodDto>();
 
+			CreateMap<UserAddress, AddressDto>();
 		}
 	}
 }
