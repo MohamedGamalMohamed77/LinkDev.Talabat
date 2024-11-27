@@ -1,5 +1,6 @@
 ﻿using LinkDev.Talabat.Core.Aplication.Abstraction;
 using LinkDev.Talabat.Core.Domain.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors
 {
-	public class CustomSaveChangesInterceptor : SaveChangesInterceptor
+	public class AuditInterceptor : SaveChangesInterceptor
 	{
 		private readonly ILoggedInUserService _loggedInUserService;
-		public CustomSaveChangesInterceptor(ILoggedInUserService loggedInUserService) 
+		public AuditInterceptor(ILoggedInUserService loggedInUserService)
 		{
 			_loggedInUserService = loggedInUserService;
 		}
@@ -22,18 +23,22 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors
 			return base.SavingChanges(eventData, result);
 		}
 
-		public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
+		public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
 		{
 			UpdateEntities(eventData.Context);
-			return base.SavedChangesAsync(eventData, result, cancellationToken);
+			return base.SavingChangesAsync(eventData, result, cancellationToken);
 		}
+
 
 		private void UpdateEntities(DbContext? dbContext)
 		{
-			if (dbContext == null) 
+			if (dbContext == null)
 				return;
-			foreach (var entry in dbContext.ChangeTracker.Entries<BaseAuditableEntity<int>>()
-					.Where(entity => entity.State is EntityState.Added or EntityState.Modified))
+
+			var entries = dbContext.ChangeTracker.Entries<IBaseAuditableEntity>()
+					.Where(entry => entry.State is EntityState.Added or EntityState.Modified);
+
+			foreach (var entry in entries)
 			{
 				if (entry.State == EntityState.Added)
 				{
@@ -42,14 +47,8 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors
 				}
 				entry.Entity.LastModifiedBy = _loggedInUserService.UserId!;
 				entry.Entity.LastModifiedOn = DateTime.UtcNow;
-
-
 			}
-		
-		
 		}
-		
-
 
 
 	}

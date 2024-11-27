@@ -9,7 +9,7 @@ namespace LinkDev.Talabat.Core.Aplication.Abstraction.Models.Orders
 {
 	public class OrderToReturnDto
 	{
-		public required int Id { get; set; }	
+		public  int Id { get; set; }	
 		public required string BuyerEmail { get; set; }
 		public DateTime OrderDate { get; set; } 
 		public required string Status { get; set; } 

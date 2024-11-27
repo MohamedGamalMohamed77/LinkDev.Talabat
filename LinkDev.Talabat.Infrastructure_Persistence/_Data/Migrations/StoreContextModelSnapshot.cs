@@ -50,7 +50,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMethods");
+                    b.ToTable("DeliveryMethods", (string)null);
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Orders.Order", b =>
@@ -66,18 +66,20 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeliveryMethodId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModifiedOn")
+                    b.Property<DateTime>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("OrderDate")
@@ -98,7 +100,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("DeliveryMethodId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Orders.OrderItem", b =>
@@ -110,15 +112,17 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModifiedOn")
+                    b.Property<DateTime>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("OrderId")
@@ -134,7 +138,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Products.Product", b =>
@@ -152,9 +156,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -162,9 +167,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModifiedOn")
+                    b.Property<DateTime>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -189,7 +195,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Products.ProductBrand", b =>
@@ -201,15 +207,17 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModifiedOn")
+                    b.Property<DateTime>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -218,7 +226,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Products.ProductCategory", b =>
@@ -230,15 +238,17 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModifiedOn")
+                    b.Property<DateTime>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -247,7 +257,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Orders.Order", b =>
@@ -257,7 +267,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasForeignKey("DeliveryMethodId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.Address", "ShippingAddress", b1 =>
+                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.Order.ShippingAddress#LinkDev.Talabat.Core.Domain.Entities.Orders.Address", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -284,7 +294,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -303,7 +313,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.ProductItemOrdered", "Product", b1 =>
+                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.OrderItem.Product#LinkDev.Talabat.Core.Domain.Entities.Orders.ProductItemOrdered", "Product", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("int");
@@ -321,7 +331,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderItems", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");
