@@ -38,6 +38,10 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 			};
 		}
 
+		public async Task<bool> EmailExists(string email)
+		{
+			return await userManager.FindByEmailAsync(email) is not null ;
+		}
 		public async Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal)
 		{
 
@@ -82,7 +86,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 			};
 			var result = await userManager.CreateAsync(user, model.Password);
 
-			if (!result.Succeeded) throw new ValidationException() { Errors = result.Errors.Select(E => E.Description) };
+			if (!result.Succeeded) throw new ValidationException() { Errors = result.Errors.Select(E => E.Description).ToArray() };
 			var response = new UserDto()
 			{
 				Id = user.Id,
@@ -113,6 +117,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 				return addressDto;
 
 		}
+
 
 		private async Task<string> GenerateTokenAsync(ApplicationUser user)
 		{

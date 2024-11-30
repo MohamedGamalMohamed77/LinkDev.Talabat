@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,7 +52,14 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Account
 			var result = await serviceManager.AuthService.UpdateUserAddress(User,addressDto);
 			return Ok(result);
 		}
+		[Authorize]
+		[HttpGet("emailexists")]
+		public async Task<ActionResult<bool>> CheckEmailExists(string email)
+		{
+			var result = await serviceManager.AuthService.EmailExists(email!);
+			return Ok(result);
 
+		}
 
 	}
 }

@@ -45,6 +45,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Orders
 		{
 			var result = await serviceManager.OrderService.GetDeliveryMethodAsync();
 			return Ok(result);
+
 		}
 
 	}
