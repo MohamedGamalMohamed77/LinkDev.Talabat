@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Config.Products
 {
-	internal class ProductCategoryConfigurations:BaseEntiyConfigurations<ProductCategory,int>
+	internal class ProductCategoryConfigurations:BaseEntityConfigurations<ProductCategory,int>
 	{
 
 		public override void Configure(EntityTypeBuilder<ProductCategory> builder)

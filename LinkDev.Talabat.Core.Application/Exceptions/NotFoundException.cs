@@ -9,7 +9,7 @@ namespace LinkDev.Talabat.Core.Application.Exceptions
 	public class NotFoundException :ApplicationException
 	{
 		public NotFoundException(string name,object key) 
-			: base($"{name} with {key} is Not Found")
+			: base($"{name} with id {key} is Not Found")
 		{
 		
 		}

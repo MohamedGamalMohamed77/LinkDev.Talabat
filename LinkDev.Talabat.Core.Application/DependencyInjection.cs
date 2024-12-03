@@ -1,12 +1,13 @@
-﻿using AutoMapper;
-using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
+﻿using LinkDev.Talabat.Core.Aplication.Abstraction.Services;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Basket;
+using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Orders;
 using LinkDev.Talabat.Core.Application.Mapping;
 using LinkDev.Talabat.Core.Application.Services;
 using LinkDev.Talabat.Core.Application.Services.Basket;
+using LinkDev.Talabat.Core.Application.Services.Orders;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
-using LinkDev.Talabat.Infrastructure.Basket_Repository;
-using Microsoft.Extensions.Configuration;
+using LinkDev.Talabat.Core.Domain.Contracts.Products;
+using LinkDev.Talabat.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkDev.Talabat.Core.Application
@@ -19,9 +20,12 @@ namespace LinkDev.Talabat.Core.Application
 			services.AddAutoMapper(typeof(MappingProfile));
 
 			//services.AddScoped(typeof(IProductService), typeof(ProductService));
-			services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
 
-			services.AddScoped<IBasketRepository, BasketRepository>();
+
+			//services.AddScoped<IBasketRepository, BasketRepository>();
+
+
+			services.AddScoped(typeof(IBasketService), typeof(BasketService));
 
 			services.AddScoped(typeof(Func<IBasketService>), (serviceProvider) =>
 			{
@@ -33,7 +37,16 @@ namespace LinkDev.Talabat.Core.Application
 				return () => serviceProvider.GetRequiredService<IBasketService>();
 			});
 
+			services.AddScoped(typeof(IOrderService), typeof(OrderService));
 
+			services.AddScoped(typeof(Func<IOrderService>), (serviceProvider) =>
+			{
+
+				return () => serviceProvider.GetRequiredService<IOrderService>();
+			});
+
+			services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
+			
 			return services;
 		}
 
