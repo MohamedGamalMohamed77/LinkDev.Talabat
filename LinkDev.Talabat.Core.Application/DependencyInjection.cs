@@ -7,7 +7,6 @@ using LinkDev.Talabat.Core.Application.Services.Basket;
 using LinkDev.Talabat.Core.Application.Services.Orders;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Domain.Contracts.Products;
-using LinkDev.Talabat.Infrastructure.Basket_Repository;
 using LinkDev.Talabat.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
