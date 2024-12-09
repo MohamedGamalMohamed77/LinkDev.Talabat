@@ -3,6 +3,7 @@ using LinkDev.Talabat.Core.Aplication.Abstraction.Models.Orders;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Basket;
 using LinkDev.Talabat.Core.Aplication.Abstraction.Services.Orders;
 using LinkDev.Talabat.Core.Application.Exceptions;
+using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Domain.Contracts.Products;
 using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services.Orders
 {
-	public class OrderService(IUnitOfWork unitOfWork, IMapper mapper, IBasketService basketService) : IOrderService
+	public class OrderService(IUnitOfWork unitOfWork, IMapper mapper, IBasketService basketService , IPaymentService paymentService) : IOrderService
 	{
 		public async Task<OrderToReturnDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order)
 		{
@@ -64,8 +65,22 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 
 			//5-Get Delivery Method	
 			var deliveryMethod = await unitOfWork.GetRepository<DeliveryMethod, int>().GetAsync(order.DeliveryMethodId);
-			
+
 			//6-create order
+
+			var orderRepo = unitOfWork.GetRepository<Order, int>();
+
+			var orderSpecs = new OrderByPaymentIntentSpecifications(basket.PaymentIntentId!);
+
+			var existingOrder = await orderRepo.GetWithSpecAsync(orderSpecs);
+
+			if (existingOrder is not null)
+			{
+				orderRepo.Delete(existingOrder);
+				await paymentService.CreateOrUpdatePaymentIntent(basket.Id);
+			}
+
+
 			var orderToCreate = new Order()
 			{
 				BuyerEmail = buyerEmail,
@@ -73,8 +88,9 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 				Subtotal = subTotal,
 				Items = orderItems,
 				DeliveryMethod =deliveryMethod,
+				PaymentIntentId=basket.PaymentIntentId!
 			};
-			await unitOfWork.GetRepository<Order, int>().AddAsync(orderToCreate);
+			await orderRepo.AddAsync(orderToCreate);
 
 			//7-save to database
 			var created = await unitOfWork.CompeleteAsync() > 0;
