@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Core.Aplication.Abstraction.Models.Basket
+namespace LinkDev.Talabat.Shared.Models.Basket
 {
 	public class BasketItemDto
 	{

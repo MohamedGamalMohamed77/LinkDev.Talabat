@@ -1,11 +1,12 @@
-﻿using System;
+﻿using LinkDev.Talabat.Shared.Models.Basket;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Core.Aplication.Abstraction.Models.Basket
+namespace LinkDev.Talabat.Shared.Models.Basket
 {
 	public class CustomerBasketDto
 	{
